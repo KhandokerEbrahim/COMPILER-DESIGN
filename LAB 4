@@ -1,0 +1,114 @@
+%{
+#include<bits/stdc++.h>
+using namespace std;
+
+int countID;
+int countKey;
+vector<string > Number,Arithma,Relational,LAPARENT,RPARENT,SEMICOLON;
+
+
+%}
+
+delim [ \t\n]
+ws {delim}+
+letter [A-Za-z]
+digit  [0-9]
+id  {letter}({letter}|{digit})*
+number  {digit}+(\.{digit}+)?
+relop  <|>|=
+arithOp [+|-|*|/]
+Lparen "("
+Rparen ")"
+Semicolon ";"
+%%
+{ws} ;
+if {  countKey++; }
+then {   countKey++;}
+return {  countKey++; } 
+{id} {    countID++; }
+{number} {  Number.push_back(yytext); }
+{relop} {   Relational.push_back(yytext);}
+{Lparen} {   LAPARENT.push_back(yytext);}
+{Rparen} {   RPARENT.push_back(yytext);}
+{Semicolon} {   SEMICOLON.push_back(yytext);}
+{arithOp} {   Arithma.push_back(yytext);}
+
+. ;
+
+%%
+
+int yywrap()
+{
+return 1;
+ }
+
+
+int main()
+{
+
+        FILE *myfile = fopen( "C:\\Users\\Lab_3\\Desktop\\a.txt","r");
+	if(!myfile)
+	{
+	   cout <<"I cant't find any file "<<endl;
+	}
+	else
+	{
+	cout <<"im here"<<endl;
+	   yyin =myfile;
+	   yylex();
+	   fclose(myfile);
+
+            cout <<"NUMBERS OF IDENTIFIERS : "<<countID<<endl;
+            cout <<"NUMBERS OF KEYWORDS : "<<countKey<<endl;
+
+	   cout <<"RELATIONAL OPERATORS ARE  :  "<<"( "<<Relational.size()<< ")"  <<endl;
+for(int i=0;i<Relational.size();i++)
+{
+    cout <<Relational[i]<<" ";
+}
+cout <<endl;
+
+ 
+
+cout <<"NUMBERS ARE  : ";
+for(int i=0;i<Number.size();i++)
+{
+    cout <<Number[i]<<" ";
+}
+cout <<endl;
+
+cout <<"ARITHMATIC OPERTATORS ARE  : ";
+for(int i=0;i<Arithma.size();i++)
+{
+    cout <<Arithma[i]<<" ";
+}
+cout <<endl;
+
+cout <<"LPARENT ARE  : ";
+for(int i=0;i<LAPARENT.size();i++)
+{
+    cout <<LAPARENT[i]<<" ";
+}
+cout <<endl;
+cout <<"RPARENT ARE  : ";
+for(int i=0;i<RPARENT.size();i++)
+{
+    cout <<RPARENT[i]<<" ";
+}
+cout <<endl;
+cout <<"SEMICOLONS ARE  : ";
+for(int i=0;i<SEMICOLON.size();i++)
+{
+    cout <<SEMICOLON[i]<<" ";
+}
+cout <<endl;
+
+	}
+	
+	getchar();
+	return 0;
+
+	
+
+
+}
