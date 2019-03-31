@@ -1,0 +1,70 @@
+
+%{
+         #include<bits/stdc++.h>
+	 using namespace std;
+	  
+
+
+	 int countID;
+	 int countKey;
+
+%}
+delim[ \t\n]
+ws{delim}+
+letter[A-Za-z]
+digit[0-9]
+id {letter}({letter}|{digit})*
+number {digit}+(\.{digit}+)?
+relop <|>|=
+arithOp [+|-|*|/]
+Lparen "("
+Rparen ")"
+Semicolon ";"
+
+
+
+%%
+
+{ws} ;
+if {countKey++;}
+ then {countKey++;}
+ return {countKey++;}
+ {id} {countID++;}
+ {number} {cout<<"Find a number"<<endl;}
+ {relop} {cout<<"Find a relop"<<endl;}
+ {Lparen} {cout<<"Find a Lparen"<<endl;}
+ {Rparen} {cout<<"Find a Rparen"<<endl;}
+ {Semicolon} {cout<<"Find a Semicolon"<<endl;}
+ {arithOp} {cout<<"Find a arithOp"<<endl;}
+ . ;
+
+%%
+
+int yywrap()
+{
+ return 1;
+}
+
+int main()
+
+{    
+     FILE *myfile = fopen("C:\\Users\\Lab_3\\Desktop\\test.txt","r");
+     if(!myfile)
+     {
+        cout <<" Cant find any file " <<endl;
+     }
+     else
+     {
+      yyin=myfile;
+      yylex();
+      fclose(myfile);
+     }
+
+     getchar();
+
+     return 0;
+
+     
+
+
+}
